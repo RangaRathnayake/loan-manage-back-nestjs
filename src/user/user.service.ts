@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { Privilage } from './privilage.entity';
 import { User } from './user.entity';
 import { Utype } from './utype.entity';
 
@@ -8,7 +9,9 @@ import { Utype } from './utype.entity';
 export class UserService {
     constructor(
         @InjectRepository(User) private readonly userRepository: Repository<User>,
-        @InjectRepository(Utype) private readonly utypeRepository: Repository<Utype>
+        @InjectRepository(Utype) private readonly utypeRepository: Repository<Utype>,
+        @InjectRepository(Privilage) private readonly privilageRepository: Repository<Privilage>
+
     ) { }
 
     async createUser(user): Promise<User> {
@@ -26,6 +29,7 @@ export class UserService {
         return await this.userRepository.find({ "relations": ["utype"] });
     }
 
+
     async get(id: number): Promise<User> {
         let u = await this.userRepository.findOne(id);
         delete u.passowrd;
@@ -34,7 +38,7 @@ export class UserService {
 
     async login(email: string, passowrd: string): Promise<any> {
         try {
-            let user = await this.userRepository.findOne({ email });
+            let user = await this.userRepository.findOne({ email }, { "relations": ["utype"] });
 
             if (user) {
                 if (user.passowrd === passowrd) {
@@ -53,6 +57,10 @@ export class UserService {
 
     async getByEmail(email: string): Promise<User | undefined> {
         return await this.userRepository.findOne({ email })
+    }
+
+    async getPrivilages(id: number): Promise<any> {
+        return await this.utypeRepository.findOne(id, { "relations": ["privilages"] });
     }
 
     // testing comment

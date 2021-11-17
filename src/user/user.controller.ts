@@ -17,11 +17,8 @@ export class UserController {
 
     @Post('reg')
     async create(@Body('user') user) {
-        console.log('-------------');
-        console.log(Body);
         return await this.userService.createUser(user);
     }
-
 
 
     @Post('login')
@@ -33,6 +30,12 @@ export class UserController {
     async get(@Param('id') id: number) {
         console.log('id  ' + id);
         return await this.userService.get(id);
+    }
+
+    @Get('privilage/:id')
+    async getPrivilage(@Param('id') id: number) {
+        console.log('id  ' + id);
+        return await this.userService.getPrivilages(id);
     }
 
 
