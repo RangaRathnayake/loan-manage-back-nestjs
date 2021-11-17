@@ -40,7 +40,7 @@ export class UserService {
         try {
             let user = await this.userRepository.findOne({ email }, { "relations": ["utype"] });
 
-            if (user) {
+            if (user && user.status == 1) {
                 if (user.passowrd === passowrd) {
                     delete user.passowrd;
                     return user;
