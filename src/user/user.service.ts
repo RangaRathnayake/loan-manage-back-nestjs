@@ -26,7 +26,7 @@ export class UserService {
     }
 
     async getAll(): Promise<User[]> {
-        return await this.userRepository.find({ "relations": ["utype"] });
+        return await this.userRepository.find({ where: { status: 1 }, "relations": ["utype"] });
     }
 
 
