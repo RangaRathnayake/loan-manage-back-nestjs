@@ -6,6 +6,6 @@ async function bootstrap() {
   app.enableCors({
     origin: ['http://localhost:4200', 'https://luxebubble.lk','https://test.luxebubble.lk']
   })
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
