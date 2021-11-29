@@ -10,7 +10,7 @@ export class Main {
     @Column({ nullable: true })
     oderNumber: string;
     @Column({ nullable: true })
-    oderNumberInt: string;
+    oderNumberInt: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     loanAmount: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
