@@ -31,7 +31,7 @@ export class Main {
     interestPerMonth: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     totalPerMonth: number;
-    @Column({ type: 'date' })
+    @Column({ nullable: true })
     monthlyPayDate: string;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     NonRefundableAdvance: number;
