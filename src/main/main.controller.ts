@@ -10,6 +10,11 @@ export class MainController {
         return await this.mainService.create(main);
     }
 
+    @Get('max/:type')
+    async getMax(@Param('type') type) {
+        return await this.mainService.getMax(type);
+    }
+
     @Get()
     async getAll() {
         return await this.mainService.getAll();
@@ -19,5 +24,7 @@ export class MainController {
     async getOne(@Param('id') id) {
         return await this.mainService.getOne(id);
     }
+
+    
 
 }
