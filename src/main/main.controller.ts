@@ -20,6 +20,11 @@ export class MainController {
         return await this.mainService.getAll();
     }
 
+    @Get('/withCus')
+    async getAllWithCus() {
+        return await this.mainService.getAllWithCus();
+    }
+
     @Get(':id')
     async getOne(@Param('id') id) {
         return await this.mainService.getOne(id);

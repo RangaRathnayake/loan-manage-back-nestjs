@@ -22,10 +22,14 @@ export class MainService {
         return await this.mainRepository.find();
     }
 
+    async getAllWithCus(): Promise<any[]> {
+        return await this.mainRepository.find({ relations: ["customer"] });
+    }
+
     async getMax(type) {
-        const query = this.mainRepository.createQueryBuilder("Main");       
+        const query = this.mainRepository.createQueryBuilder("Main");
         query.where("loanType=:loanType", { loanType: type });
         query.select("MAX(oderNumberInt)", "max");
-        return query.getRawOne();       
+        return query.getRawOne();
     }
 }
