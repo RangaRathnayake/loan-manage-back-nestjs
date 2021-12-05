@@ -15,7 +15,7 @@ export class MainService {
     }
 
     async getOne(id): Promise<Main> {
-        return await this.mainRepository.findOne(id);
+        return await this.mainRepository.findOne(id, { relations: ["customer"] });
     }
 
     async getAll(): Promise<Main[]> {
