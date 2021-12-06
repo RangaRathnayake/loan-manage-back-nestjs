@@ -1,4 +1,5 @@
 import { Main } from "src/main/main.entity";
+import { Transaction } from "src/transaction/transaction.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -28,4 +29,6 @@ export class Customer {
     status: number;
     @OneToMany(() => Main, main => main.customer)
     mains: Main[];
+    @OneToMany(() => Transaction, transaction => transaction.customer)
+    transactions: Transaction[];
 }

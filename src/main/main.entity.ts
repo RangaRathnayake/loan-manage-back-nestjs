@@ -1,4 +1,5 @@
 import { Customer } from "src/customer/customer.entity";
+import { Transaction } from "src/transaction/transaction.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -53,6 +54,8 @@ export class Main {
     status: number;
     @ManyToOne(() => Customer, customer => customer.mains)
     customer: Customer;
+    @ManyToOne(() => Transaction, transaction => transaction.main)
+    transactions: Transaction[];
 
 
 }

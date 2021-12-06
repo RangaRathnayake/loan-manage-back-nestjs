@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Transaction } from "src/transaction/transaction.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Utype } from "./utype.entity";
 
 
@@ -25,5 +26,7 @@ export class User {
     status: number;
     @ManyToOne(() => Utype, utype => utype.users)
     utype: Utype;
+    @OneToMany(() => Transaction, transaction => transaction.user)
+    transactions: Transaction[]
 
 }
