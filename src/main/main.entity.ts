@@ -18,13 +18,13 @@ export class Main {
     dockCharge: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     totalLoanAmount: number;
-    @Column({ type: 'int' })
+    @Column({ type: 'int', nullable: true })
     monthsCount: number;
     @Column({ type: 'decimal', precision: 5, scale: 2, default: 0, })
     interestRate: number;
-    @Column({ type: 'int' })
+    @Column({ type: 'int',nullable: true })
     interestRateId: number;
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     startDate: string;
     @Column()
     userId: number;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { InterestService } from './interest.service';
 
 @Controller('interest')
@@ -8,6 +8,11 @@ export class InterestController {
     @Get()
     async get() {
         return await this.interestService.getAll();
+    }
+
+    @Get(':id')
+    async getById(@Param('id') id) {
+        return await this.interestService.findById(id);
     }
 
     @Post()

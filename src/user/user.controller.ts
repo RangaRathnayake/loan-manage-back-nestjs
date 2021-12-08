@@ -28,13 +28,11 @@ export class UserController {
 
     @Get(':id')
     async get(@Param('id') id: number) {
-        console.log('id  ' + id);
         return await this.userService.get(id);
     }
 
     @Get('privilage/:id')
     async getPrivilage(@Param('id') id: number) {
-        console.log('id  ' + id);
         return await this.userService.getPrivilages(id);
     }
 

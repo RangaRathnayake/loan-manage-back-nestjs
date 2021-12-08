@@ -11,6 +11,10 @@ export class InterestService {
         return await this.interestRepository.find();
     }
 
+    async findById(id): Promise<Interest> {
+        return await this.interestRepository.findOne({ id })
+    }
+
     async create(interest): Promise<Interest> {
         return await this.interestRepository.save(interest);
     }
