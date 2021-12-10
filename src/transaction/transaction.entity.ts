@@ -30,7 +30,9 @@ export class Transaction {
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     advance: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
-    otherPay: number;
+    over: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    otherPay: number;    
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     total: number;
     @Column()
@@ -38,8 +40,8 @@ export class Transaction {
     @Column({ nullable: true })
     cheque: number;
     @Column()
-    loanType: number;
-    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    loanType: string;
+    @Column()
     interestRate: number;
     @Column()
     status: number;
