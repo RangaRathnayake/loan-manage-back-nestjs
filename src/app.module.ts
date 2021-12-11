@@ -9,6 +9,9 @@ import { ProjectModule } from './project/project.module';
 import { MainModule } from './main/main.module';
 import { ExpenceseModule } from './expencese/expencese.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { KeyvalModule } from './keyval/keyval.module';
+import { ReceiptModule } from './receipt/receipt.module';
+import { ArrearsModule } from './arrears/arrears.module';
 
 @Module({
   imports: [
@@ -17,11 +20,11 @@ import { TransactionModule } from './transaction/transaction.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      // username: 'coopkhpm_luxi',
+      // username: 'visiwxsf_loan',
       password: 'root',
-      // password: 'x&te2~}nfYMi',
+      // password: 'iM*eiFwgt4',
       database: 'loanmange',
-      // database: 'coopkhpm_luxe',
+      // database: 'visiwxsf_loan',
       entities: [],
       autoLoadEntities: true,
       synchronize: true
@@ -32,7 +35,10 @@ import { TransactionModule } from './transaction/transaction.module';
     ProjectModule,
     MainModule,
     ExpenceseModule,
-    TransactionModule
+    TransactionModule,
+    KeyvalModule,
+    ReceiptModule,
+    ArrearsModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -30,6 +30,10 @@ export class MainController {
         return await this.mainService.getOne(id);
     }
 
-    
+    @Get('warantDate/:id')
+    async getWarantDate(@Param('id') id) {
+        return await this.mainService.getWarrantDate(id);
+    }
+
 
 }

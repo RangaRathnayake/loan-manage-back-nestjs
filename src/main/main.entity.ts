@@ -1,6 +1,7 @@
+import { Arrears } from "src/arrears/arrears.entity";
 import { Customer } from "src/customer/customer.entity";
 import { Transaction } from "src/transaction/transaction.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Main {
@@ -22,7 +23,7 @@ export class Main {
     monthsCount: number;
     @Column({ type: 'decimal', precision: 5, scale: 2, default: 0, })
     interestRate: number;
-    @Column({ type: 'int',nullable: true })
+    @Column({ type: 'int', nullable: true })
     interestRateId: number;
     @Column({ type: 'date', nullable: true })
     startDate: string;
@@ -54,8 +55,10 @@ export class Main {
     status: number;
     @ManyToOne(() => Customer, customer => customer.mains)
     customer: Customer;
-    @ManyToOne(() => Transaction, transaction => transaction.main)
+    @OneToMany(() => Transaction, transaction => transaction.main)
     transactions: Transaction[];
+    @OneToMany(() => Arrears, arrears => arrears.main)
+    arrearss: Arrears;
 
 
 }
