@@ -3,20 +3,31 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Arrears {
+    forEach(arg0: (element: any) => void) {
+        throw new Error('Method not implemented.');
+    }
     @PrimaryGeneratedColumn()
     id: number;
     @Column({ type: "date" })
-    createdDate: string;
-    @Column({ type: "date" })
-    updatedDate: string;
+    payDate: string;
+    @Column({ type: "date", nullable: true })
+    completeDate: string;
+    @Column()
+    installment: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
-    arrears: number;
+    capital: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    interest: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    capitalPaid: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    interestPaid: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    capitalArrears: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    interestArrears: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     warrant: number;
-    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
-    over: number;
-    @Column()
-    arrearsDayCount: number;
     @ManyToOne(() => Main, main => main.arrearss)
     main: Main;
     @Column()

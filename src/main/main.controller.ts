@@ -30,9 +30,15 @@ export class MainController {
         return await this.mainService.getOne(id);
     }
 
-    @Get('warantDate/:id')
-    async getWarantDate(@Param('id') id) {
-        return await this.mainService.getWarrantDate(id);
+    
+    @Post('arrearsProcess')
+    async arrearsProcess() {
+        return this.mainService.arrearsProcess();
+    }
+
+    @Post('createArriarsList')
+    async createArriarsList(@Body('main') main) {
+        this.mainService.createArriarsList(main)
     }
 
 

@@ -22,7 +22,7 @@ export class UserService {
     }
 
     async getUtype() {
-        return this.utypeRepository.find();
+        return this.utypeRepository.find({ where: { status: 1 } });
     }
 
     async getAll(): Promise<User[]> {

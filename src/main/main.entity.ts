@@ -21,7 +21,7 @@ export class Main {
     totalLoanAmount: number;
     @Column({ type: 'int', nullable: true })
     monthsCount: number;
-    @Column({ type: 'decimal', precision: 5, scale: 2, default: 0, })
+    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, })
     interestRate: number;
     @Column({ type: 'int', nullable: true })
     interestRateId: number;

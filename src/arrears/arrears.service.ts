@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { Arrears } from './arrears.entity';
 
 @Injectable()
@@ -17,12 +17,12 @@ export class ArrearsService {
         return await this.arrearsRepository.find({ where: { main: id } });
     }
 
-    async getAllActiveByMainId(id) {
-        return await this.arrearsRepository.find({ where: { main: id, status: 1 } });
+    async getAllPendingByMainId(id) {
+        return await this.arrearsRepository.find({ where: { main: id, status: Not(1) } });
     }
 
     async getAllActive() {
-        return await this.arrearsRepository.find({ where: { status: 1 } });
+        return await this.arrearsRepository.find();
     }
 
 
