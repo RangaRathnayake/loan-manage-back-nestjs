@@ -28,6 +28,10 @@ export class MainService {
         return await this.mainRepository.find();
     }
 
+    async getAllByStatus(status): Promise<Main[]> {
+        return await this.mainRepository.find({ where: { status: status } });
+    }
+
     async getAllApprove(): Promise<Main[]> {
         return await this.mainRepository.find({ where: { status: 1 }, relations: ["arrearss"] })
     }
@@ -43,7 +47,7 @@ export class MainService {
         return query.getRawOne();
     }
 
-   
+
 
     async arrearsProcess() {
         console.log(

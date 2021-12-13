@@ -20,6 +20,11 @@ export class MainController {
         return await this.mainService.getAll();
     }
 
+    @Get('status/:status')
+    async getAllByStatus(@Param('status') status) {
+        return await this.mainService.getAllByStatus(status);
+    }
+
     @Get('/withCus')
     async getAllWithCus() {
         return await this.mainService.getAllWithCus();
@@ -30,7 +35,7 @@ export class MainController {
         return await this.mainService.getOne(id);
     }
 
-    
+
     @Post('arrearsProcess')
     async arrearsProcess() {
         return this.mainService.arrearsProcess();
