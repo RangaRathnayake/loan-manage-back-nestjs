@@ -28,6 +28,8 @@ export class Arrears {
     interestArrears: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     warrant: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    warrantPaid: number;
     @ManyToOne(() => Main, main => main.arrearss)
     main: Main;
     @Column()

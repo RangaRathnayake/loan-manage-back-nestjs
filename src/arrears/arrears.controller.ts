@@ -13,18 +13,23 @@ export class ArrearsController {
         return await this.arrearsService.save(arrears)
     }
 
+    @Post('update')
+    async update(@Body('arrearss') arrearss) {
+        return await this.arrearsService.save(arrearss)
+    }
+
     @Get()
     async getAllActive() {
         return await this.arrearsService.getAllActive();
     }
 
     @Get('main/:id')
-    async getAllActiveByMain(@Param('id') id) {      
+    async getAllActiveByMain(@Param('id') id) {
         return await this.arrearsService.getAllByMainId(id);
     }
 
     @Get('pending/:id')
-    async getAllPendingByMain(@Param('id') id) {      
+    async getAllPendingByMain(@Param('id') id) {
         return await this.arrearsService.getAllPendingByMainId(id);
     }
 

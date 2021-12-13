@@ -22,6 +22,8 @@ export class Transaction {
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     warant: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    arrears: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     dockCharge: number;
     @Column({ default: 0, })
     monthCount: number;
@@ -32,7 +34,7 @@ export class Transaction {
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     over: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
-    otherPay: number;    
+    otherPay: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     total: number;
     @Column()

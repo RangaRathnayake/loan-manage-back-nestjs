@@ -13,6 +13,14 @@ export class ArrearsService {
         return await this.arrearsRepository.save(arrears);
     }
 
+    async update(arrearss) {
+        arrearss.forEach(async element => {
+            await this.arrearsRepository.save(element);
+        });
+        return { "Done": "ok" }
+
+    }
+
     async getAllByMainId(id) {
         return await this.arrearsRepository.find({ where: { main: id } });
     }
