@@ -29,7 +29,7 @@ export class MainService {
     }
 
     async getAllByStatus(status): Promise<Main[]> {
-        return await this.mainRepository.find({ where: { status: status } });
+        return await this.mainRepository.find({ where: { status: status }, relations: ["customer"] });
     }
 
     async getAllApprove(): Promise<Main[]> {
