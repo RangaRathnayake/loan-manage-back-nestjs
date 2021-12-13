@@ -40,7 +40,7 @@ export class Transaction {
     @Column()
     payType: string;
     @Column({ nullable: true })
-    cheque: number;
+    cheque: string;
     @Column()
     loanType: string;
     @Column()

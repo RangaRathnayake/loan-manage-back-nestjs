@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Transaction } from "src/transaction/transaction.entity";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Receipt {
@@ -22,4 +23,5 @@ export class Receipt {
     bank: string;
     @Column()
     status: string;
+    
 }
