@@ -5,12 +5,12 @@ import { CustomerService } from './customer.service';
 export class CustomerController {
     constructor(private customerService: CustomerService) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('customer') customer) {
         return await this.customerService.create(customer);
     }
 
-    @Get()
+    @Get('get')
     async getAll() {
         return await this.customerService.getAll();
     }

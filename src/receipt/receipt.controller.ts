@@ -7,12 +7,12 @@ export class ReceiptController {
         private receiptService: ReceiptService
     ) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('receipt') receipt) {
         return await this.receiptService.create(receipt);
     }
 
-    @Get()
+    @Get('get')
     async getAll() {
         return await this.receiptService.getAll();
     }

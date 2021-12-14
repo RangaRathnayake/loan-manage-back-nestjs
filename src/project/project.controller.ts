@@ -7,12 +7,12 @@ export class ProjectController {
         private projectService: ProjectService
     ) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('project') project) {
         return await this.projectService.create(project);
     }
 
-    @Get()
+    @Get('get')
     async getAll() {
         return await this.projectService.getAll();
     }

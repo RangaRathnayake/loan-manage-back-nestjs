@@ -14,7 +14,7 @@ export class KeyvalService {
         return await this.keyvalRepository.save(keyval);
     }
 
-    async getAll(): Promise<Keyval[]> {
+    async getAll(): Promise<Keyval[]> {     
         return await this.keyvalRepository.find();
     }
 

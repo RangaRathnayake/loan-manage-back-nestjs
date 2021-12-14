@@ -18,7 +18,6 @@ export class ArrearsService {
             await this.arrearsRepository.save(element);
         });
         return { "Done": "ok" }
-
     }
 
     async getAllByMainId(id) {

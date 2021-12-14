@@ -5,12 +5,12 @@ import { KeyvalService } from './keyval.service';
 export class KeyvalController {
     constructor(private keyvalService: KeyvalService) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('keyval') keyval) {
         return await this.keyvalService.create(keyval);
     }
 
-    @Get()
+    @Get('get')
     async getAll() {
         return await this.keyvalService.getAll();
     }

@@ -5,7 +5,7 @@ import { InterestService } from './interest.service';
 export class InterestController {
     constructor(private interestService: InterestService) { }
 
-    @Get()
+    @Get('get')
     async get() {
         return await this.interestService.getAll();
     }
@@ -15,7 +15,7 @@ export class InterestController {
         return await this.interestService.findById(id);
     }
 
-    @Post()
+    @Post('save')
     async create(@Body('interest') interest) {
         return await this.interestService.create(interest);
     }

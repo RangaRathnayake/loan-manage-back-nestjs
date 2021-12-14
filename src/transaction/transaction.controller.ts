@@ -5,7 +5,7 @@ import { TransactionService } from './transaction.service';
 export class TransactionController {
     constructor(private transactonService: TransactionService) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('transaction') transaction) {
         return await this.transactonService.create(transaction);
     }

@@ -5,7 +5,7 @@ import { MainService } from './main.service';
 export class MainController {
     constructor(private mainService: MainService) { }
 
-    @Post()
+    @Post('save')
     async create(@Body('main') main) {
         return await this.mainService.create(main);
     }
@@ -15,7 +15,7 @@ export class MainController {
         return await this.mainService.getMax(type);
     }
 
-    @Get()
+    @Get('get')
     async getAll() {
         return await this.mainService.getAll();
     }

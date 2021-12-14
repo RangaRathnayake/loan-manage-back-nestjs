@@ -22,7 +22,7 @@ export class ExpenceseController {
         return await this.expenceseService.createExType(extype);
     }
 
-    @Get()
+    @Get('get')
     async getAllExpencese() {
         return await this.expenceseService.getAllExpencese();
     }
@@ -32,7 +32,7 @@ export class ExpenceseController {
         return await this.expenceseService.findOneExpencese(id);
     }
 
-    @Post()
+    @Post('save')
     async createExpencese(@Body('expences') expences) {
         return await this.expenceseService.createExpencese(expences);
     }

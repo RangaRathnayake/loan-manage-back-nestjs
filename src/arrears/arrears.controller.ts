@@ -8,7 +8,7 @@ export class ArrearsController {
         private arrearsService: ArrearsService
     ) { }
 
-    @Post()
+    @Post('save')
     async save(@Body('arrears') arrears) {
         return await this.arrearsService.save(arrears)
     }
@@ -18,7 +18,7 @@ export class ArrearsController {
         return await this.arrearsService.save(arrearss)
     }
 
-    @Get()
+    @Get('get')
     async getAllActive() {
         return await this.arrearsService.getAllActive();
     }
