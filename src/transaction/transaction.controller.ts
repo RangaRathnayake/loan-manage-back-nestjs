@@ -15,4 +15,9 @@ export class TransactionController {
         return await this.transactonService.getByMain(id)
     }
 
+    @Get()
+    async getall() {
+        return await this.transactonService.getall();
+    }
+
 }

@@ -19,6 +19,10 @@ export class TransactionService {
         return await this.transactionRepository.find({ where: { main: id } })
     }
 
+    async getall() {
+        return await this.transactionRepository.find()
+    }
+
 
 
 
