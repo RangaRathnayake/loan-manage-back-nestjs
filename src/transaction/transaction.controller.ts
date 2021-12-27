@@ -15,9 +15,14 @@ export class TransactionController {
         return await this.transactonService.getByMain(id)
     }
 
-    @Get()
+    @Get('get')
     async getall() {
         return await this.transactonService.getall();
+    }
+
+    @Post('getRange')
+    async getRange(@Body('range')range) {
+        return await this.transactonService.getRange(range);
     }
 
 }

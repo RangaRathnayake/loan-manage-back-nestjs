@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Transaction } from './transaction.entity';
 
 @Injectable()
@@ -21,6 +21,16 @@ export class TransactionService {
 
     async getall() {
         return await this.transactionRepository.find()
+    }
+
+    async getRange(range) {
+        return await this.transactionRepository.find(
+            {
+                where: {
+                    day: Between(range.from, range.to)
+                }
+            }
+        )
     }
 
 
