@@ -24,6 +24,10 @@ export class MainService {
         return await this.mainRepository.findOne(id, { relations: ["customer"] });
     }
 
+    async getByNumber(number): Promise<Main> {
+        return await this.mainRepository.findOne({ where: { oderNumber: number }, relations: ["customer"] });
+    }
+
     async getAll(): Promise<Main[]> {
         return await this.mainRepository.find();
     }

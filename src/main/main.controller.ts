@@ -20,6 +20,8 @@ export class MainController {
         return await this.mainService.getAll();
     }
 
+
+
     @Get('status/:status')
     async getAllByStatus(@Param('status') status) {
         return await this.mainService.getAllByStatus(status);
@@ -33,6 +35,11 @@ export class MainController {
     @Get(':id')
     async getOne(@Param('id') id) {
         return await this.mainService.getOne(id);
+    }
+
+    @Get('getByNumber/:number')
+    async getByNumber(@Param('number') number) {
+        return await this.mainService.getByNumber(number);
     }
 
 
