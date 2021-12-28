@@ -8,7 +8,7 @@ export class InterestService {
     constructor(@InjectRepository(Interest) private readonly interestRepository: Repository<Interest>) { }
 
     async getAll(): Promise<Interest[]> {
-        return await this.interestRepository.find();
+        return await this.interestRepository.find({ order: { 'rate': 'ASC' } });
     }
 
     async findById(id): Promise<Interest> {
