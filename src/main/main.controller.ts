@@ -53,5 +53,11 @@ export class MainController {
         this.mainService.createArriarsList(main)
     }
 
+    @Get('count/:id')
+    async getDayCount(@Param('id') id) {
+        return await this.mainService.getDayCount(id);
+    }
+    
+
 
 }

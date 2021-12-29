@@ -67,37 +67,66 @@ export class MainService {
         // console.log(list);
 
         list.forEach(mainObj => {
+
+            var dateBegin = null;
+            var expCount = 0;
+            var totalArrears = 0;
+            var totalWarrant = 0;
+
+
             if (mainI != list.length) {
+
                 mainObj.arrearss.forEach(async arrears => {
+
                     if (arrears.status != 1) {
+
                         var payDate = new Date(arrears.payDate);
+
                         payDate.setDate(payDate.getDate() + parseInt(val.val));
+
                         if (today > payDate) {
+
                             const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
+
                             console.log(expDayCount);
 
-                            if (arrears.status == 2) {
-                                var warrant = ((Number(arrears.capitalArrears) + Number(arrears.interestArrears)) * Number(wr.val) / 100) * expDayCount;
-                                arrears.warrant = warrant;
-                            }
-
                             if (arrears.status == 0) {
+
                                 var capital = arrears.capital;
+
                                 var interest = arrears.interest;
+
                                 arrears.capitalArrears = capital;
+
                                 arrears.interestArrears = interest;
+
                                 arrears.capital = 0;
+
                                 arrears.interest = 0;
-                                var warrant = ((Number(capital) + Number(interest)) * Number(wr.val) / 100) * expDayCount;
-                                arrears.warrant = warrant;
+
                                 arrears.status = 2;
+
                             }
 
+                            if (arrears.status == 2) {
+                                expCount = expDayCount;
+                                if (!dateBegin) {
+                                    dateBegin = payDate;
+                                }
+                                totalArrears += Number(arrears.capitalArrears) + Number(arrears.interestArrears);
+                                // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
+                                // console.log("Total Arrears  " + totalArrears);
+                                totalWarrant = (Number(totalArrears) * Number(wr.val) / 100) * expDayCount;
+                                console.log(" WWW  " + totalWarrant);
+                            }
                             await this.arrearsService.save(arrears);
-
                         }
                     }
                 });
+
+                this.arrearsService.updateWarant(mainObj.id, totalWarrant);
+
+
             }
         })
 
@@ -120,6 +149,27 @@ export class MainService {
                 status: 0
             }
             await this.arrearsService.save(arrears);
+        }
+    }
+
+
+    async getDayCount(id) {
+        try {
+            const val = await this.keyvalService.getByKey("warrant_day");
+            const todate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
+            var today = new Date(todate);
+            const arrears = await this.arrearsService.getArrearsDate(id);
+
+            var payDate = new Date(arrears.payDate);
+
+            payDate.setDate(payDate.getDate() + parseInt(val.val));
+
+            const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
+            console.log(expDayCount);
+            return { count: expDayCount };
+
+        } catch (error) {
+            console.log(error);
         }
     }
 
