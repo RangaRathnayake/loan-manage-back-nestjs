@@ -48,8 +48,6 @@ export class Main {
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     sellingPrice: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
-    furtherAdvance: number;
-    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     finaladvance: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     ep: number;
