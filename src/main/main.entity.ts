@@ -41,6 +41,20 @@ export class Main {
     NonRefundableAdvance: number;
     @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
     downPayment: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    value: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    discount: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    sellingPrice: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    furtherAdvance: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    finaladvance: number;
+    @Column({ type: 'decimal', precision: 20, scale: 2, default: 0, })
+    ep: number;
+    @Column({ nullable: true })
+    perches: string;
     @Column({ nullable: true })
     projectId: number;
     @Column({ nullable: true })
