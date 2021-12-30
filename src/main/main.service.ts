@@ -88,7 +88,7 @@ export class MainService {
 
                             const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
 
-                            console.log(expDayCount);
+                            // console.log(expDayCount);
 
                             if (arrears.status == 0) {
 
@@ -117,7 +117,7 @@ export class MainService {
                                 // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
                                 // console.log("Total Arrears  " + totalArrears);
                                 totalWarrant = ((Number(totalArrears) * Number(wr.val) / 100) / 30) * expDayCount;
-                                console.log(" WWW  " + totalWarrant);
+                                // console.log(" WWW  " + totalWarrant);
                             }
                             await this.arrearsService.save(arrears);
                         }
@@ -163,7 +163,7 @@ export class MainService {
                 var payDate = new Date(arrears.payDate);
                 payDate.setDate(payDate.getDate() + parseInt(val.val));
                 const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
-                console.log(expDayCount);
+                // console.log(expDayCount);
                 return { count: expDayCount };
             } else {
                 return { count: 0 };
