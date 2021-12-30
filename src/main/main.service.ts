@@ -116,7 +116,7 @@ export class MainService {
                                 totalArrears += Number(arrears.capitalArrears) + Number(arrears.interestArrears);
                                 // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
                                 // console.log("Total Arrears  " + totalArrears);
-                                totalWarrant = (Number(totalArrears) * Number(wr.val) / 100) * expDayCount;
+                                totalWarrant = ((Number(totalArrears) * Number(wr.val) / 100) / 30) * expDayCount;
                                 console.log(" WWW  " + totalWarrant);
                             }
                             await this.arrearsService.save(arrears);
@@ -159,14 +159,16 @@ export class MainService {
             const todate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
             var today = new Date(todate);
             const arrears = await this.arrearsService.getArrearsDate(id);
+            if (arrears) {
+                var payDate = new Date(arrears.payDate);
+                payDate.setDate(payDate.getDate() + parseInt(val.val));
+                const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
+                console.log(expDayCount);
+                return { count: expDayCount };
+            } else {
+                return { count: 0 };
+            }
 
-            var payDate = new Date(arrears.payDate);
-
-            payDate.setDate(payDate.getDate() + parseInt(val.val));
-
-            const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
-            console.log(expDayCount);
-            return { count: expDayCount };
 
         } catch (error) {
             console.log(error);
