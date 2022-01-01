@@ -176,6 +176,13 @@ export class MainService {
     }
 
 
+    async saveTransaction(transaction) {
+        const trans = await this.transactionService.create(transaction);
+        const main = await this.getOne(transaction.main);
+        return { transaction: trans, main: main }
+    }
+
+
 }
 
 

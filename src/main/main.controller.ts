@@ -57,7 +57,12 @@ export class MainController {
     async getDayCount(@Param('id') id) {
         return await this.mainService.getDayCount(id);
     }
-    
+
+    @Post('saveTransaction')
+    async saveTransaction(@Body('transaction') transaction) {
+        return await this.mainService.saveTransaction(transaction);
+    }
+
 
 
 }
