@@ -38,6 +38,16 @@ export class ArrearsController {
         return await this.arrearsService.getAllByMainId(id);
     }
 
+    @Post('updateWarant')
+    async updateWarant(@Body('values') values) {
+        return await this.arrearsService.updateWarant(values.mid, values.warrant)
+    }
+
+    @Post('updateInterest')
+    async updateInterest(@Body('values') values) {
+        return await this.arrearsService.updateInterest(values.mid, values.newval)
+    }
+
 
 
 }

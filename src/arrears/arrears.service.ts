@@ -40,6 +40,23 @@ export class ArrearsService {
         }
     }
 
+    async updateInterest(mid, newval) {
+        try {
+            const ar = await this.arrearsRepository.find({ where: { main: mid, status: 0 } });
+            for (var i = 0; i < ar.length; i++) {
+                if (i == 0) {
+                    ar[i].interest = newval;
+                } else {
+                    ar[i].interest = 0;
+                }
+                await this.arrearsRepository.save(ar[i]);
+            }
+            return { "updated": "OK" };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getAllActive() {
         return await this.arrearsRepository.find();
     }
