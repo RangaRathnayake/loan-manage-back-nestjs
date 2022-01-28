@@ -20,6 +20,11 @@ export class TransactionController {
         return await this.transactonService.getall();
     }
 
+    @Get('getDesc')
+    async getDesc() {
+        return await this.transactonService.getDesc();
+    }
+
     @Post('getRange')
     async getRange(@Body('range')range) {
         return await this.transactonService.getRange(range);

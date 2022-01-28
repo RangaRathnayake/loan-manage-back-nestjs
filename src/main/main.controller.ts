@@ -63,6 +63,11 @@ export class MainController {
         return await this.mainService.saveTransaction(transaction);
     }
 
+    @Get('getTransaction/:id')
+    async getTransaction(@Param('id') id) {
+        return await this.mainService.getTransaction(id);
+    }
+
 
 
 }

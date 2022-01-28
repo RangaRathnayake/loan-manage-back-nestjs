@@ -10,10 +10,13 @@ export class TransactionService {
     ) { }
 
 
-    async create(transaction) {        
+    async create(transaction) {
         return await this.transactionRepository.save(transaction);
     }
 
+    async getOne(id) {
+        return await this.transactionRepository.findOne(id, { relations: ['main'] });
+    }
 
     async getByMain(id) {
         return await this.transactionRepository.find({ where: { main: id } })
@@ -21,6 +24,10 @@ export class TransactionService {
 
     async getall() {
         return await this.transactionRepository.find()
+    }
+
+    async getDesc() {
+        return await this.transactionRepository.find({ order: { id: 'DESC' } });
     }
 
     async getRange(range) {

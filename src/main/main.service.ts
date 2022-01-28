@@ -182,6 +182,12 @@ export class MainService {
         return { transaction: trans, main: main }
     }
 
+    async getTransaction(id) {
+        const trans = await this.transactionService.getOne(id);
+        const main = await this.getOne(trans.main);
+        return { transaction: trans, main: main }
+    }
+
 
 }
 
