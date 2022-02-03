@@ -48,6 +48,7 @@ export class TransactionService {
         loanType: range.type,
         day: Between(range.from, range.to),
       },
+      relations: ['main'],
     });
   }
 }
