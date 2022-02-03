@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -27,7 +28,7 @@ import { ArrearsModule } from './arrears/arrears.module';
       // database: 'visiwxsf_loan',
       entities: [],
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
     }),
     UserModule,
     InterestModule,
@@ -38,9 +39,9 @@ import { ArrearsModule } from './arrears/arrears.module';
     TransactionModule,
     KeyvalModule,
     ReceiptModule,
-    ArrearsModule
+    ArrearsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
