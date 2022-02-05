@@ -38,6 +38,7 @@ export class TransactionService {
       where: {
         day: Between(range.from, range.to),
       },
+      relations: ['main'],
     });
   }
 
