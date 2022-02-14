@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { max } from 'class-validator';
@@ -9,188 +10,185 @@ import { Main } from './main.entity';
 
 @Injectable()
 export class MainService {
-    constructor(
-        @InjectRepository(Main) private readonly mainRepository: Repository<Main>,
-        private keyvalService: KeyvalService,
-        private transactionService: TransactionService,
-        private arrearsService: ArrearsService
-    ) { }
+  constructor(
+    @InjectRepository(Main) private readonly mainRepository: Repository<Main>,
+    private keyvalService: KeyvalService,
+    private transactionService: TransactionService,
+    private arrearsService: ArrearsService,
+  ) {}
 
-    async create(main): Promise<Main> {
-        return await this.mainRepository.save(main);
+  async create(main): Promise<Main> {
+    return await this.mainRepository.save(main);
+  }
+
+  async getOne(id): Promise<Main> {
+    return await this.mainRepository.findOne(id, { relations: ['customer'] });
+  }
+
+  async getByNumber(number): Promise<Main[]> {
+    return await this.mainRepository.find({
+      where: { oderNumber: number },
+      relations: ['customer'],
+    });
+  }
+
+  async getAll(): Promise<Main[]> {
+    return await this.mainRepository.find();
+  }
+
+  async getAllByStatus(status): Promise<Main[]> {
+    return await this.mainRepository.find({
+      where: { status: status },
+      relations: ['customer'],
+    });
+  }
+
+  async getAllApprove(): Promise<Main[]> {
+    return await this.mainRepository.find({
+      where: { status: 1 },
+      relations: ['arrearss'],
+    });
+  }
+
+  async getAllWithCus(): Promise<any[]> {
+    return await this.mainRepository.find({ relations: ['customer'] });
+  }
+
+  async getMax(type) {
+    const query = this.mainRepository.createQueryBuilder('Main');
+    query.where('loanType=:loanType', { loanType: type });
+    query.select('MAX(oderNumberInt)', 'max');
+    return query.getRawOne();
+  }
+
+  async arrearsProcess() {
+    console.log('process start');
+    const val = await this.keyvalService.getByKey('warrant_day');
+    const wr = await this.keyvalService.getByKey('warrant_rate');
+    const todate = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Colombo',
+    });
+    var today = new Date(todate);
+
+    const list = await this.getAllApprove();
+    var mainI = 0;
+    // console.log(list);
+
+    list.forEach((mainObj) => {
+      var dateBegin = null;
+      var expCount = 0;
+      var totalArrears = 0;
+      var totalWarrant = 0;
+
+      if (mainI != list.length) {
+        mainObj.arrearss.forEach(async (arrears) => {
+          if (arrears.status != 1) {
+            var payDate = new Date(arrears.payDate);
+
+            payDate.setDate(payDate.getDate() + parseInt(val.val));
+
+            if (today > payDate) {
+              const expDayCount = Math.ceil(
+                (today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24),
+              );
+
+              // console.log(expDayCount);
+
+              if (arrears.status == 0) {
+                var capital = arrears.capital;
+
+                var interest = arrears.interest;
+
+                arrears.capitalArrears = capital;
+
+                arrears.interestArrears = interest;
+
+                arrears.capital = 0;
+
+                arrears.interest = 0;
+
+                arrears.status = 2;
+              }
+
+              if (arrears.status == 2) {
+                expCount = expDayCount;
+                if (!dateBegin) {
+                  dateBegin = payDate;
+                }
+                totalArrears +=
+                  Number(arrears.capitalArrears) +
+                  Number(arrears.interestArrears);
+                // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
+                // console.log("Total Arrears  " + totalArrears);
+                totalWarrant =
+                  ((Number(totalArrears) * Number(wr.val)) / 100 / 30) *
+                  expDayCount;
+                // console.log(" WWW  " + totalWarrant);
+              }
+              await this.arrearsService.save(arrears);
+            }
+          }
+        });
+
+        this.arrearsService.updateWarant(mainObj.id, totalWarrant);
+      }
+    });
+
+    console.log('process end');
+    return { status: 'OK' };
+  }
+
+  async createArriarsList(main) {
+    var installment = main.monthsCount;
+    var nextDate = new Date(main.startDate);
+    var i = 1;
+    for (i = 1; i <= installment; i++) {
+      nextDate.setMonth(nextDate.getMonth() + 1);
+      var arrears = {
+        payDate: nextDate,
+        installment: i,
+        capital: main.capitalPerMonth,
+        interest: main.interestPerMonth,
+        main: main.id,
+        status: 0,
+      };
+      await this.arrearsService.save(arrears);
     }
+  }
 
-    async getOne(id): Promise<Main> {
-        return await this.mainRepository.findOne(id, { relations: ["customer"] });
-    }
-
-    async getByNumber(number): Promise<Main[]> {
-        return await this.mainRepository.find({ where: { oderNumber: number }, relations: ["customer"] });
-    }
-
-    async getAll(): Promise<Main[]> {
-        return await this.mainRepository.find();
-    }
-
-    async getAllByStatus(status): Promise<Main[]> {
-        return await this.mainRepository.find({ where: { status: status }, relations: ["customer"] });
-    }
-
-    async getAllApprove(): Promise<Main[]> {
-        return await this.mainRepository.find({ where: { status: 1 }, relations: ["arrearss"] })
-    }
-
-    async getAllWithCus(): Promise<any[]> {
-        return await this.mainRepository.find({ relations: ["customer"] });
-    }
-
-    async getMax(type) {
-        const query = this.mainRepository.createQueryBuilder("Main");
-        query.where("loanType=:loanType", { loanType: type });
-        query.select("MAX(oderNumberInt)", "max");
-        return query.getRawOne();
-    }
-
-
-
-    async arrearsProcess() {
-        console.log(
-            "process start"
+  async getDayCount(id) {
+    try {
+      const val = await this.keyvalService.getByKey('warrant_day');
+      const todate = new Date().toLocaleString('en-US', {
+        timeZone: 'Asia/Colombo',
+      });
+      var today = new Date(todate);
+      const arrears = await this.arrearsService.getArrearsDate(id);
+      if (arrears) {
+        var payDate = new Date(arrears.payDate);
+        payDate.setDate(payDate.getDate() + parseInt(val.val));
+        const expDayCount = Math.ceil(
+          (today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24),
         );
-        const val = await this.keyvalService.getByKey("warrant_day");
-        const wr = await this.keyvalService.getByKey("warrant_rate");
-        const todate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
-        var today = new Date(todate);
-
-        const list = await this.getAllApprove();
-        var mainI = 0;
-        // console.log(list);
-
-        list.forEach(mainObj => {
-
-            var dateBegin = null;
-            var expCount = 0;
-            var totalArrears = 0;
-            var totalWarrant = 0;
-
-
-            if (mainI != list.length) {
-
-                mainObj.arrearss.forEach(async arrears => {
-
-                    if (arrears.status != 1) {
-
-                        var payDate = new Date(arrears.payDate);
-
-                        payDate.setDate(payDate.getDate() + parseInt(val.val));
-
-                        if (today > payDate) {
-
-                            const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
-
-                            // console.log(expDayCount);
-
-                            if (arrears.status == 0) {
-
-                                var capital = arrears.capital;
-
-                                var interest = arrears.interest;
-
-                                arrears.capitalArrears = capital;
-
-                                arrears.interestArrears = interest;
-
-                                arrears.capital = 0;
-
-                                arrears.interest = 0;
-
-                                arrears.status = 2;
-
-                            }
-
-                            if (arrears.status == 2) {
-                                expCount = expDayCount;
-                                if (!dateBegin) {
-                                    dateBegin = payDate;
-                                }
-                                totalArrears += Number(arrears.capitalArrears) + Number(arrears.interestArrears);
-                                // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
-                                // console.log("Total Arrears  " + totalArrears);
-                                totalWarrant = ((Number(totalArrears) * Number(wr.val) / 100) / 30) * expDayCount;
-                                // console.log(" WWW  " + totalWarrant);
-                            }
-                            await this.arrearsService.save(arrears);
-                        }
-                    }
-                });
-
-                this.arrearsService.updateWarant(mainObj.id, totalWarrant);
-
-
-            }
-        })
-
-        console.log("process end");
-        return { status: "OK" };
+        // console.log(expDayCount);
+        return { count: expDayCount };
+      } else {
+        return { count: 0 };
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    async createArriarsList(main) {
-        var installment = main.monthsCount;
-        var nextDate = new Date(main.startDate);
-        var i = 1;
-        for (i = 1; i <= installment; i++) {
-            nextDate.setMonth(nextDate.getMonth() + 1);
-            var arrears = {
-                payDate: nextDate,
-                installment: i,
-                capital: main.capitalPerMonth,
-                interest: main.interestPerMonth,
-                main: main.id,
-                status: 0
-            }
-            await this.arrearsService.save(arrears);
-        }
-    }
+  async saveTransaction(transaction) {
+    const trans = await this.transactionService.create(transaction);
+    const main = await this.getOne(transaction.main);
+    return { transaction: trans, main: main };
+  }
 
-
-    async getDayCount(id) {
-        try {
-            const val = await this.keyvalService.getByKey("warrant_day");
-            const todate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Colombo' });
-            var today = new Date(todate);
-            const arrears = await this.arrearsService.getArrearsDate(id);
-            if (arrears) {
-                var payDate = new Date(arrears.payDate);
-                payDate.setDate(payDate.getDate() + parseInt(val.val));
-                const expDayCount = Math.ceil((today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24));
-                // console.log(expDayCount);
-                return { count: expDayCount };
-            } else {
-                return { count: 0 };
-            }
-
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-    async saveTransaction(transaction) {
-        const trans = await this.transactionService.create(transaction);
-        const main = await this.getOne(transaction.main);
-        return { transaction: trans, main: main }
-    }
-
-    async getTransaction(id) {
-        const trans = await this.transactionService.getOne(id);
-        const main = await this.getOne(trans.main);
-        return { transaction: trans, main: main }
-    }
-
-
+  async getTransaction(id) {
+    const trans = await this.transactionService.getOne(id);
+    const main = await this.getOne(trans.main);
+    return { transaction: trans, main: main };
+  }
 }
-
-
-
-
