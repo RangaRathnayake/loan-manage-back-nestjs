@@ -191,4 +191,23 @@ export class MainService {
     const main = await this.getOne(trans.main);
     return { transaction: trans, main: main };
   }
+
+  async arrearsReport() {
+    try {
+      let approved = await await this.mainRepository.find({
+        where: { status: 1 },
+        relations: ['arrearss', 'customer'],
+      });
+
+      approved.forEach((m) => {
+        console.log(m.arrearss);
+      });
+
+      //F   console.log(approved);
+      return approved;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
 }

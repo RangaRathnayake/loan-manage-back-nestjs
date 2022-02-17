@@ -65,4 +65,9 @@ export class MainController {
   async getTransaction(@Param('id') id) {
     return await this.mainService.getTransaction(id);
   }
+
+  @Post('arrearsReport')
+  async report() {
+    return await this.mainService.arrearsReport();
+  }
 }
