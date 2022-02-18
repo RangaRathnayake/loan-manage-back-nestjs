@@ -194,17 +194,62 @@ export class MainService {
 
   async arrearsReport() {
     try {
-      let approved = await await this.mainRepository.find({
+      const approved = await await this.mainRepository.find({
         where: { status: 1 },
         relations: ['arrearss', 'customer'],
       });
+      // console.log(approved);
 
-      approved.forEach((m) => {
-        console.log(m.arrearss);
+      let arr = [];
+
+      await approved.forEach(async (m) => {
+        let obj = {
+          mid: m.id,
+          loanNumber: m.oderNumber,
+          customer: m.customer.name,
+          nic: m.customer.nic,
+          mobile: m.customer.mobile,
+          type: m.loanType,
+          loanAmount: m.totalLoanAmount,
+          monthsCount: m.monthsCount,
+          interestRate: m.interestRate,
+          capitalPerMonth: m.capitalPerMonth,
+          interestPerMonth: m.interestPerMonth,
+          totalPerMonth: m.totalPerMonth,
+          arrearsCapital: 0,
+          arrearsInterest: 0,
+          warrant: 0,
+          count: 0,
+          full_total: 0,
+          total_arrears: 0,
+        };
+        let count = 0;
+        await m.arrearss.forEach((a) => {
+          if (a.status === 2) {
+            count++;
+            obj.arrearsCapital += Number(a.capitalArrears);
+            obj.arrearsInterest += Number(a.interestArrears);
+            obj.warrant += Number(a.warrant);
+            obj.count = count;
+            obj.full_total +=
+              Number(a.capitalArrears) +
+              Number(a.interestArrears) +
+              Number(a.warrant);
+            obj.total_arrears +=
+              Number(a.capitalArrears) + Number(a.interestArrears);
+          }
+        });
+
+        arr.push(obj);
       });
 
-      //F   console.log(approved);
-      return approved;
+      const rarr = arr.filter((aa) => {
+        if (aa.total_arrears > 0) {
+          return aa;
+        }
+      });
+
+      return rarr;
     } catch (error) {
       console.log(error);
       return error;
