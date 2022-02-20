@@ -70,4 +70,9 @@ export class MainController {
   async report() {
     return await this.mainService.arrearsReport();
   }
+
+  @Post('loanByDateRange')
+  async loanByDateRange(@Body('range') range) {
+    return await this.mainService.loanByDateRange(range);
+  }
 }

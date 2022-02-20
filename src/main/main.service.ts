@@ -5,7 +5,7 @@ import { max } from 'class-validator';
 import { ArrearsService } from 'src/arrears/arrears.service';
 import { KeyvalService } from 'src/keyval/keyval.service';
 import { TransactionService } from 'src/transaction/transaction.service';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Main } from './main.entity';
 
 @Injectable()
@@ -253,6 +253,17 @@ export class MainService {
     } catch (error) {
       console.log(error);
       return error;
+    }
+  }
+
+  async loanByDateRange(range) {
+    try {
+      return await this.mainRepository.find({
+        where: { startDate: Between(range.from, range.to) },
+        relations: ['customer'],
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 }
