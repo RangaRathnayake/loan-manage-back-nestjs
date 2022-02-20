@@ -5,7 +5,7 @@ import { max } from 'class-validator';
 import { ArrearsService } from 'src/arrears/arrears.service';
 import { KeyvalService } from 'src/keyval/keyval.service';
 import { TransactionService } from 'src/transaction/transaction.service';
-import { Between, Repository } from 'typeorm';
+import { Between, Connection, Repository } from 'typeorm';
 import { Main } from './main.entity';
 
 @Injectable()
@@ -15,6 +15,7 @@ export class MainService {
     private keyvalService: KeyvalService,
     private transactionService: TransactionService,
     private arrearsService: ArrearsService,
+    private connection: Connection,
   ) {}
 
   async create(main): Promise<Main> {
@@ -262,6 +263,21 @@ export class MainService {
         where: { startDate: Between(range.from, range.to) },
         relations: ['customer'],
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async findExpenceseWithLone() {
+    try {
+      const query = this.connection
+        .createQueryBuilder()
+        .select('Main')
+        .from(Main, 'main')
+        .innerJoinAndSelect('expencese.mainId', 'main')
+        .getMany();
+
+      console.log(query);
     } catch (error) {
       console.log(error);
     }

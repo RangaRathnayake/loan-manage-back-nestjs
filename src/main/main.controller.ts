@@ -75,4 +75,9 @@ export class MainController {
   async loanByDateRange(@Body('range') range) {
     return await this.mainService.loanByDateRange(range);
   }
+
+  @Post('findExpenceseWithLone')
+  async findExpenceseWithLone() {
+    return await this.mainService.findExpenceseWithLone();
+  }
 }
