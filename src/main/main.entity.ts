@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Arrears } from 'src/arrears/arrears.entity';
 import { Customer } from 'src/customer/customer.entity';
+import { Expencese } from 'src/expencese/expencese.entity';
 import { Transaction } from 'src/transaction/transaction.entity';
 import {
   Column,
@@ -78,4 +79,6 @@ export class Main {
   transactions: Transaction[];
   @OneToMany(() => Arrears, (arrears) => arrears.main)
   arrearss: Arrears;
+  @OneToMany(() => Expencese, (expenceses) => expenceses.main)
+  expenceses: Expencese[];
 }

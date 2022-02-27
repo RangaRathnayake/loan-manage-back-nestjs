@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import e from 'express';
 import { Between, Repository } from 'typeorm';
 import { Expencese } from './expencese.entity';
 import { Exptype } from './exptype.entity';
@@ -17,6 +16,13 @@ export class ExpenceseService {
 
   async getAllExType() {
     return await this.extypeRepository.find();
+  }
+
+  async getByMainId(mid): Promise<Expencese[]> {
+    return await this.expenceseRepository.find({
+      where: { mainId: mid },
+      relations: ['exptype'],
+    });
   }
 
   async createExType(exType) {

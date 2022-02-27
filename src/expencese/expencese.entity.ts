@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Main } from 'src/main/main.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Exptype } from './exptype.entity';
 
@@ -8,8 +9,6 @@ export class Expencese {
   id: number;
   @Column({ nullable: true })
   description: string;
-  @Column({ nullable: true })
-  mainId: number;
   @Column({ nullable: true })
   loanNumber: string;
   @Column({ nullable: true })
@@ -22,4 +21,6 @@ export class Expencese {
   status: number;
   @ManyToOne(() => Exptype, (exptype) => exptype.Expenses)
   exptype: Exptype;
+  @ManyToOne(() => Main, (main) => main.expenceses)
+  main: Main;
 }

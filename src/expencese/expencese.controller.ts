@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { MainService } from 'src/main/main.service';
 import { ExpenceseService } from './expencese.service';
 
 @Controller('expencese')

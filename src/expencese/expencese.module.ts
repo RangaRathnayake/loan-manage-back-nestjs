@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { ExpenceseService } from './expencese.service';
 import { ExpenceseController } from './expencese.controller';
@@ -8,6 +9,6 @@ import { Exptype } from './exptype.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Expencese, Exptype])],
   providers: [ExpenceseService],
-  controllers: [ExpenceseController]
+  controllers: [ExpenceseController],
 })
-export class ExpenceseModule { }
+export class ExpenceseModule {}
