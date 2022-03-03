@@ -31,6 +31,11 @@ export class MainController {
     return await this.mainService.getAllWithCus();
   }
 
+  @Get('/withCusByType/:type')
+  async getAllWithCusByType(@Param('type') type) {
+    return await this.mainService.getAllWithCusByType(type);
+  }
+
   @Get(':id')
   async getOne(@Param('id') id) {
     return await this.mainService.getOne(id);

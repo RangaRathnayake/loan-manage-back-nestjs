@@ -53,6 +53,13 @@ export class MainService {
     return await this.mainRepository.find({ relations: ['customer'] });
   }
 
+  async getAllWithCusByType(type: string): Promise<any[]> {
+    return await this.mainRepository.find({
+      where: { loanType: type },
+      relations: ['customer'],
+    });
+  }
+
   async getMax(type) {
     const query = this.mainRepository.createQueryBuilder('Main');
     query.where('loanType=:loanType', { loanType: type });
