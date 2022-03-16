@@ -74,22 +74,27 @@ export class MainService {
     const todate = new Date().toLocaleString('en-US', {
       timeZone: 'Asia/Colombo',
     });
-    var today = new Date(todate);
+
+    const today = new Date(todate);
 
     const list = await this.getAllApprove();
-    var mainI = 0;
+    const mainI = 0;
     // console.log(list);
 
     list.forEach((mainObj) => {
-      var dateBegin = null;
-      var expCount = 0;
-      var totalArrears = 0;
-      var totalWarrant = 0;
+      let dateBegin = null;
+      let expCount = 0;
+      let totalArrears = 0;
+      let totalWarrant = 0;
 
       if (mainI != list.length) {
-        mainObj.arrearss.forEach(async (arrears) => {
+        const arre: any = mainObj.arrearss;
+
+        for (let i = arre.length - 1; i >= 0; i--) {
+          const arrears = mainObj.arrearss[i];
+
           if (arrears.status != 1) {
-            var payDate = new Date(arrears.payDate);
+            const payDate = new Date(arrears.payDate);
 
             payDate.setDate(payDate.getDate() + parseInt(val.val));
 
@@ -98,12 +103,10 @@ export class MainService {
                 (today.getTime() - payDate.getTime()) / (1000 * 60 * 60 * 24),
               );
 
-              // console.log(expDayCount);
-
               if (arrears.status == 0) {
-                var capital = arrears.capital;
+                const capital = arrears.capital;
 
-                var interest = arrears.interest;
+                const interest = arrears.interest;
 
                 arrears.capitalArrears = capital;
 
@@ -124,17 +127,29 @@ export class MainService {
                 totalArrears +=
                   Number(arrears.capitalArrears) +
                   Number(arrears.interestArrears);
-                // console.log(dateBegin + "  -- mid : " + mainObj.id + "    ----     " + expCount);
-                // console.log("Total Arrears  " + totalArrears);
+
                 totalWarrant =
                   ((Number(totalArrears) * Number(wr.val)) / 100 / 30) *
                   expDayCount;
-                // console.log(" WWW  " + totalWarrant);
+
+                if (mainObj.id == 7) {
+                  console.log(
+                    dateBegin +
+                      '  -- mid : ' +
+                      mainObj.id +
+                      '    ----     ' +
+                      expCount,
+                  );
+                  console.log('Total Arrears  ' + totalArrears);
+                  console.log(' WWW  ' + totalWarrant);
+                }
               }
-              await this.arrearsService.save(arrears);
+              this.arrearsService.save(arrears);
             }
           }
-        });
+        }
+
+        // );
 
         this.arrearsService.updateWarant(mainObj.id, totalWarrant);
       }
