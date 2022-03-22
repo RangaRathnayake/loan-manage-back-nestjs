@@ -129,8 +129,8 @@ export class MainService {
                   Number(arrears.interestArrears);
 
                 totalWarrant =
-                  ((Number(totalArrears) * Number(wr.val)) / 100 / 30) *
-                  expDayCount;
+                  (Number(totalArrears) * Number(wr.val)) / 100 +
+                  0.001 * expDayCount;
 
                 if (mainObj.id == 7) {
                   console.log(
