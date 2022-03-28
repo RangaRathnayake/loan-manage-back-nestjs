@@ -86,11 +86,12 @@ export class MainService {
       let expCount = 0;
       let totalArrears = 0;
       let totalWarrant = 0;
+      let fullWarrant = 0;
 
       if (mainI != list.length) {
         const arre: any = mainObj.arrearss;
 
-        for (let i = arre.length - 1; i >= 0; i--) {
+        for (let i = 0; i < arre.length; i++) {
           const arrears = mainObj.arrearss[i];
 
           if (arrears.status != 1) {
@@ -118,40 +119,47 @@ export class MainService {
 
                 arrears.status = 2;
               }
-
+              // if (mainObj.id == 1) {
               if (arrears.status == 2) {
                 expCount = expDayCount;
                 if (!dateBegin) {
                   dateBegin = payDate;
                 }
+
                 totalArrears +=
                   Number(arrears.capitalArrears) +
                   Number(arrears.interestArrears);
+                // console.log('---------------------------');
 
-                totalWarrant =
-                  (Number(totalArrears) * Number(wr.val)) / 100 +
-                  0.001 * expDayCount;
-
-                if (mainObj.id == 7) {
-                  console.log(
-                    dateBegin +
-                      '  -- mid : ' +
-                      mainObj.id +
-                      '    ----     ' +
-                      expCount,
-                  );
-                  console.log('Total Arrears  ' + totalArrears);
-                  console.log(' WWW  ' + totalWarrant);
+                const mm = expDayCount / 30;
+                if (mm < 1) {
+                  // console.log(expDayCount);
+                  // console.log('Masekata adui');
+                  totalWarrant =
+                    ((Number(totalArrears) * Number(wr.val)) / 100 / 30) *
+                    expDayCount;
+                  // console.log(totalWarrant);
+                } else {
+                  // console.log('Month 30');
+                  totalWarrant =
+                    ((Number(totalArrears) * Number(wr.val)) / 100 / 30) * 30;
+                  // console.log(totalWarrant);
                 }
+
+                fullWarrant += totalWarrant;
+
+                // console.log('Full :   ' + fullWarrant);
+                // console.log('---------------------------');
               }
               this.arrearsService.save(arrears);
+              // }
             }
           }
         }
 
         // );
 
-        this.arrearsService.updateWarant(mainObj.id, totalWarrant);
+        this.arrearsService.updateWarant(mainObj.id, fullWarrant);
       }
     });
 
