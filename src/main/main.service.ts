@@ -4,8 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ArrearsService } from 'src/arrears/arrears.service';
 import { KeyvalService } from 'src/keyval/keyval.service';
 import { TransactionService } from 'src/transaction/transaction.service';
-import { Between, Repository } from 'typeorm';
+import { Between, getConnection, Repository } from 'typeorm';
 import { Main } from './main.entity';
+import { Connection, createConnection, getConnectionManager } from 'typeorm';
+import { type } from 'os';
 
 @Injectable()
 export class MainService {
@@ -296,12 +298,26 @@ export class MainService {
     }
   }
 
-  async findExpenceseWithLone() {
+  async findExpenceseWithLone(type) {
+    console.log(type);
     try {
       const main = await this.mainRepository.find({
         relations: ['expenceses'],
+        where: { loanType: type },
       });
       return main;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async mairReport() {
+    try {
+      const con = await getConnection();
+      const data = await con.query(
+        'SELECT arrears.mainId,Sum(arrears.capital) as TC,Sum(arrears.interest) as TI ,Sum(arrears.capitalPaid) as TPC,Sum(arrears.interestPaid) as TPI ,Sum(arrears.capitalArrears) as TCA,Sum(arrears.interestArrears) as TIA ,Sum(arrears.warrant) as TWA ,Sum(arrears.warrantPaid) as TPW ,main.loanType,main.oderNumber,main.loanAmount,main.dockCharge,main.totalLoanAmount,main.monthsCount,main.interestRate,main.interestRateId,main.startDate,main.capitalPerMonth,main.interestPerMonth,main.totalPerMonth,main.NonRefundableAdvance,main.downPayment,main.projectId,main.projectName,main.blockNumber,main.propertyName,main.propertyCode,main.`status`,main.customerId,main.oderNumberInt,main.monthlyPayDate,main.`value`,main.discount,main.sellingPrice,main.finaladvance,main.ep,main.perches FROM arrears RIGHT JOIN main ON arrears.mainId=main.id  WHERE main.loanType="L"  GROUP BY arrears.mainId',
+      );
+      return data;
     } catch (error) {
       console.log(error);
     }

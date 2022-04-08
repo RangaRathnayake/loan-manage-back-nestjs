@@ -82,7 +82,23 @@ export class MainController {
   }
 
   @Post('findExpenceseWithLone')
-  async findExpenceseWithLone() {
-    return await this.mainService.findExpenceseWithLone();
+  async findExpenceseWithLone(@Body('type') type) {
+    console.log(type);
+    return await this.mainService.findExpenceseWithLone(type);
+  }
+
+  @Post('mainReport')
+  async mainReport() {
+    return await this.mainService.mairReport();
+    // try {
+    //   mysqlConnection.execute('select * from user', (error, rows, fildData) => {
+    //     if (!error) {
+    //       return rows;
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   return error;
+    // }
   }
 }

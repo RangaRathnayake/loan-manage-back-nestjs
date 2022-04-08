@@ -36,7 +36,7 @@ export class TransactionService {
   async getRange(range) {
     return await this.transactionRepository.find({
       where: {
-        day: Between(range.from, range.to),
+        day: Between(new Date(range.from), new Date(range.to)),
       },
       relations: ['main'],
     });
