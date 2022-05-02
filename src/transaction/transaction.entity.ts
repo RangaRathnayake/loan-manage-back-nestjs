@@ -25,6 +25,8 @@ export class Transaction {
   @Column({ type: 'decimal', precision: 20, scale: 2, default: 0 })
   arrears: number;
   @Column({ type: 'decimal', precision: 20, scale: 2, default: 0 })
+  arrearsInterest: number;
+  @Column({ type: 'decimal', precision: 20, scale: 2, default: 0 })
   dockCharge: number;
   @Column({ default: 0 })
   monthCount: number;
