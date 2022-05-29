@@ -20,12 +20,12 @@ import { ArrearsModule } from './arrears/arrears.module';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'root',
-      // username: 'visiwxsf_loan',
-      password: 'root',
-      // password: 'iM*eiFwgt4',
-      database: 'loanmange',
-      // database: 'visiwxsf_loan',
+      // username: 'root',
+      username: 'visiwxsf_loan',
+      // password: 'root',
+      password: 'iM*eiFwgt4',
+      // database: 'loanmange',
+      database: 'visiwxsf_loan',
       entities: [],
       autoLoadEntities: true,
       synchronize: true,
@@ -44,4 +44,4 @@ import { ArrearsModule } from './arrears/arrears.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
