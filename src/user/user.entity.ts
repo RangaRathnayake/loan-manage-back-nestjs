@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Transaction } from "src/transaction/transaction.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Utype } from "./utype.entity";

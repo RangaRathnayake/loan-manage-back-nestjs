@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Privilage } from "./privilage.entity";
 import { User } from "./user.entity";
@@ -12,7 +13,7 @@ export class Utype {
     description: string;
     @Column({ default: 1 })
     status: number;
-    
+
     @OneToMany(() => User, user => user.utype)
     users: User[];
 
