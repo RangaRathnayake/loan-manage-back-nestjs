@@ -13,6 +13,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { KeyvalModule } from './keyval/keyval.module';
 import { ReceiptModule } from './receipt/receipt.module';
 import { ArrearsModule } from './arrears/arrears.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -20,12 +21,12 @@ import { ArrearsModule } from './arrears/arrears.module';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      // username: 'root',
-      username: 'visiwxsf_loan',
-      // password: 'root',
-      password: 'iM*eiFwgt4',
-      // database: 'loanmange',
-      database: 'visiwxsf_loan',
+      username: 'root',
+      // username: 'visiwxsf_loan',
+      password: 'root',
+      // password: 'iM*eiFwgt4',
+      database: 'loanmange',
+      // database: 'visiwxsf_loan',
       entities: [],
       autoLoadEntities: true,
       synchronize: true,
@@ -40,6 +41,7 @@ import { ArrearsModule } from './arrears/arrears.module';
     KeyvalModule,
     ReceiptModule,
     ArrearsModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

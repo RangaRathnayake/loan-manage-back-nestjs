@@ -55,6 +55,37 @@ export class TransactionService {
     }
   }
 
+
+  async getMonthlyTransactionReport(type) {
+    try {
+      const con = await getConnection();
+      const data = await con.query(`SELECT YEAR ( day ) as year,
+      MONTH ( day ) as month,
+      Sum( transaction.capital ) + Sum( transaction.arrears ) AS capital,
+      Sum( transaction.interest ) + Sum( transaction.arrearsInterest ) AS interest,
+      Sum( transaction.warant ) AS warant,
+      Sum( transaction.dockCharge ) AS dockCharge,
+      Sum( transaction.nonRefund ) AS nonRefund,
+      Sum( transaction.advance ) AS advance,
+      Sum( transaction.otherPay ) AS otherPay,
+      Sum( transaction.total ) AS total,
+      Sum( transaction.over ) AS overPay 
+    FROM
+      transaction 
+    WHERE
+      transaction.status = 1 
+      AND transaction.loanType = '`+ type + `'
+    GROUP BY
+      YEAR ( day ),
+      MONTH ( day ) 
+    ORDER BY
+      transaction.day ASC`);
+      return data;
+    } catch (error) {
+
+    }
+  }
+
   async getIncome(range) {
     return await this.transactionRepository.find({
       where: {

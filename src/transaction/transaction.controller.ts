@@ -40,4 +40,10 @@ export class TransactionController {
   async getIncome(@Body('range') range) {
     return await this.transactonService.getIncome(range);
   }
+
+  @Post('monthlyTransactionReport')
+  async monthlyTransactionReport(@Body('range') range) {
+    return await this.transactonService.getMonthlyTransactionReport(range.type);
+  }
+
 }
