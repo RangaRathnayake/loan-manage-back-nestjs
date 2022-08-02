@@ -12,14 +12,20 @@ export class ReportController {
         return await this.reportService.createReport(body);
     }
 
-    @Get('byType/:type')
-    async getByType(@Param('type') type) {
-        return await this.reportService.getByType(type);
+    @Post('byType')
+    async getByType(@Body('range') range) {
+        return await this.reportService.getByType(range.type);
     }
 
     @Get('findOne/:id')
     async findOne(@Param('id') id) {
         return await this.reportService.findOne(id);
+    }
+
+    @Post('find')
+    async find(@Body('body') body) {
+        console.log(body);
+        return await this.reportService.find(body.data);
     }
 
 
