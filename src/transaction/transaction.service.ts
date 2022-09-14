@@ -46,7 +46,7 @@ export class TransactionService {
     try {
       const con = await getConnection();
       const data = await con.query(
-        'SELECT `transaction`.id,`transaction`.mainId,`transaction`.`day`,Sum(`transaction`.capital) AS capital,Sum(`transaction`.interest) AS interest,Sum(`transaction`.warant) AS warant,Sum(`transaction`.dockCharge) AS dockCharge,Sum(`transaction`.nonRefund) AS nonRefund,Sum(`transaction`.advance) AS advance,Sum(`transaction`.otherPay) AS otherPay,Sum(`transaction`.total) AS total,`transaction`.`status`,`transaction`.loanType,Sum(`transaction`.over) AS overp,Sum(`transaction`.arrears) AS arrears,`transaction`.expenceId,Sum(`transaction`.arrearsInterest) AS arrearsInterest,main.oderNumber FROM `transaction` INNER JOIN main ON `transaction`.mainId=main.id ' +
+        'SELECT `transaction`.id,`transaction`.mainId, MAX(`transaction`.`day`) AS day ,Sum(`transaction`.capital) AS capital,Sum(`transaction`.interest) AS interest,Sum(`transaction`.warant) AS warant,Sum(`transaction`.dockCharge) AS dockCharge,Sum(`transaction`.nonRefund) AS nonRefund,Sum(`transaction`.advance) AS advance,Sum(`transaction`.otherPay) AS otherPay,Sum(`transaction`.total) AS total,`transaction`.`status`,`transaction`.loanType,Sum(`transaction`.over) AS overp,Sum(`transaction`.arrears) AS arrears,`transaction`.expenceId,Sum(`transaction`.arrearsInterest) AS arrearsInterest,main.oderNumber FROM `transaction` INNER JOIN main ON `transaction`.mainId=main.id ' +
         ' WHERE `transaction`.`day` BETWEEN "2021-01-01" AND "2035-12-30" AND main.`status`=3 AND `transaction`.expenceId IS NULL AND `transaction`.loanType="' + range.type + '" GROUP BY `transaction`.mainId ORDER BY `transaction`.id DESC'
       );
       return data;
