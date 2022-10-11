@@ -16,7 +16,7 @@ export class MainService {
     private keyvalService: KeyvalService,
     private transactionService: TransactionService,
     private arrearsService: ArrearsService,
-  ) {}
+  ) { }
 
   async create(main): Promise<Main> {
     return await this.mainRepository.save(main);
@@ -303,7 +303,7 @@ export class MainService {
     try {
       const main = await this.mainRepository.find({
         relations: ['expenceses'],
-        where: { loanType: type },
+        where: { loanType: type.type, startDate: Between(type.from, type.to) },
       });
       return main;
     } catch (error) {

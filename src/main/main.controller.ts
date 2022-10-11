@@ -82,7 +82,7 @@ export class MainController {
   }
 
   @Post('findExpenceseWithLone')
-  async findExpenceseWithLone(@Body('type') type) {
+  async findExpenceseWithLone(@Body() type) {
     console.log(type);
     return await this.mainService.findExpenceseWithLone(type);
   }
