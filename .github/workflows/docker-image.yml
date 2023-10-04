@@ -16,6 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: | 
-          echo "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" | docker login ghcr.io -u RangaRathnayake --password-stdin
+          echo "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" | docker login ghcr.io -u RangaRathnayake --password-stdin
           docker build . --file Dockerfile --tag ghcr.io/rangarathnayake/loan-manage-back-nestjs:latest
           docker push ghcr.io/rangarathnayake/loan-manage-back-nestjs:latest
