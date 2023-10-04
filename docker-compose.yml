@@ -1,0 +1,8 @@
+version: '3'
+services:
+  rmc_backend_nestjs:
+    image: rmc_backend_nestjs_with_pm2:latest
+    ports:
+      - "3001:3001" # Adjust the port mapping as needed
+    environment:
+      - NODE_ENV=production # Set the environment variable if needed

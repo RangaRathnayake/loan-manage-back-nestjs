@@ -14,23 +14,26 @@ import { KeyvalModule } from './keyval/keyval.module';
 import { ReceiptModule } from './receipt/receipt.module';
 import { ArrearsModule } from './arrears/arrears.module';
 import { ReportModule } from './report/report.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      // username: 'root',
-      username: 'visiwxsf_loan',
-      // password: 'root',
-      password: '}[oY0yN$0R+S',
-      // database: 'loan',
-      database: 'visiwxsf_loan',
-      entities: [],
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+  imports: [ConfigModule.forRoot({
+    envFilePath: '.env',
+  }),
+  TypeOrmModule.forRoot({
+    type: 'mysql',
+    host: process.env.MYSQL_HOST,
+    port: parseInt(process.env.MYSQL_PORT),
+    // username: 'root',
+    username: process.env.MYSQL_USER,
+    // password: 'root',
+    password: process.env.MYSQL_PASSWORD,
+    // database: 'loan',
+    database: process.env.MYSQL_DATABASE,
+    entities: [],
+    autoLoadEntities: true,
+    synchronize: true,
+  }),
     UserModule,
     InterestModule,
     CustomerModule,

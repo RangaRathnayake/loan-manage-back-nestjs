@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "rmc-back-end",
+      "cwd": "/usr/src/app/dist",
+      "script": "main.js",
+      "env": {
+        "JWT_KEY": "secret",
+        "host": "38.242.250.250",
+        "user": "root",
+        "password": "SmartWin2012",
+        "database": "rmc_loan"
+      }
+    }
+  ]
+}
