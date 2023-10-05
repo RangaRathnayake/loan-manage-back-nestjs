@@ -16,6 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: | 
-          docker login -u RangaRathnayake -p Lasa2012@Docker
+          echo "Lasa2012@Docker" | docker login -u RangaRathnayake --password-stdin
           docker build . --file Dockerfile --tag RangaRathnayake/loan-manage-back-nestjs:latest
           docker push RangaRathnayake/loan-manage-back-nestjs:latest
