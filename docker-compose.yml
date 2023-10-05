@@ -1,8 +1,14 @@
 version: '3'
 services:
   rmc_backend_nestjs:
-    image: rmc_backend_nestjs_with_pm2:latest
+    image: rangarathnayake/rmc_nestjs_backend:latest
     ports:
-      - "3001:3001" # Adjust the port mapping as needed
+      - "3001:3000" # Adjust the port mapping as needed
     environment:
       - NODE_ENV=production # Set the environment variable if needed
+      - MYSQL_HOST=38.242.250.250
+      - MYSQL_PORT=3306
+      - MYSQL_PASSWORD=SmartWin2012
+      - MYSQL_DATABASE=rmc_loan
+      - MYSQL_USER=root
+    restart: unless-stopped

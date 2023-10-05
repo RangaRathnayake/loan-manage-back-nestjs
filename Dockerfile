@@ -45,15 +45,9 @@ FROM node:16-alpine As production
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
-# Install PM2 globally
-RUN npm install -g pm2
-
 RUN apk add --no-cache tzdata
 RUN cp /usr/share/zoneinfo/Asia/Colombo /etc/localtime
 RUN echo "Asia/Colombo" > /etc/timezone
 
 # USER node
-# CMD [ "node", "dist/main.js" ]
-
-# Start the Node.js application with PM2
-CMD ["pm2-runtime", "pm2-apps.config.json"]
+CMD [ "node", "dist/main.js" ]
