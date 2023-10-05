@@ -16,6 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: | 
-          echo "dckr_pat_IkCMPj0lCa6Qnv28aiAxDZJ95C0" | docker login -u RangaRathnayake --password-stdin
+          echo "dckr_pat_IkCMPj0lCa6Qnv28aiAxDZJ95C0" | docker login -u RangaRathnayake
           docker build . --file Dockerfile --tag RangaRathnayake/loan-manage-back-nestjs:latest
           docker push RangaRathnayake/loan-manage-back-nestjs:latest
