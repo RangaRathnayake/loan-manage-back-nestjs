@@ -3,7 +3,7 @@ services:
   rmc_backend_nestjs:
     image: rangarathnayake/rmc_nestjs_backend:latest
     ports:
-      - "3001:3000" # Adjust the port mapping as needed
+      - "3001:3001" # Adjust the port mapping as needed
     environment:
       - NODE_ENV=production # Set the environment variable if needed
       - MYSQL_HOST=38.242.250.250
